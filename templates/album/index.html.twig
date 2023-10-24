@@ -1,35 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Album index {% endblock %} {% block body %}
+<h1>Album</h1>
 
-{% block title %}Album index{% endblock %}
+{% for album in albums %}
+<div class="card">
+  <img
+    src="{{ asset('uploads/albums/pictures/' ~ album.pictureFilename) }}"
+    alt=""
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{ album.name }}</h5>
+    <p class="card-text">{{ album.artiste }}</p>
+    <a href="{{ path('app_album_show', { id: album.id }) }}">show</a>
+    <a href="{{ path('app_album_edit', { id: album.id }) }}">edit</a>
+  </div>
+  </div>
 
-{% block body %}
-    <h1>Album index</h1>
+  {% endfor %}
+  <a href="{{ path('app_album_new') }}">Create new</a>
+  {% endblock %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for album in albums %}
-            <tr>
-                <td>{{ album.id }}</td>
-                <td>{{ album.name }}</td>
-                <td>
-                    <a href="{{ path('app_album_show', {'id': album.id}) }}">show</a>
-                    <a href="{{ path('app_album_edit', {'id': album.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_album_new') }}">Create new</a>
-{% endblock %}
